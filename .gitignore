@@ -1,0 +1,10 @@
+# .gitignore
+settings.json          # May contain API keys
+*.jsonl               # Conversation logs
+cache/                # Runtime cache
+logs/                 # Log files
+.DS_Store            # macOS files
+projects
+shell-snapshots
+statsig
+todos
