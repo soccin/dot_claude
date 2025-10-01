@@ -29,11 +29,16 @@ Based on the above changes:
 1. Checks which files are staged with `git status`
 2. If 0 files are staged, tell the user and stop!
 3. Create a draft of an appropriate commit message following the instructions below
-4. Save this message in a markdown file (commit_message.md)
+4. Save this message in a markdown file "commit_message_${UUID}.md" where $UUID is some random string to prevent collisions with multiple claude processes.
 5. Use the command `subl -nw` to allow me to edit the commit message.
 6. Once I have saved the changes do the commit with the editted message
 7. DELETE the temporary commit message file
-8. You have the capability to call multiple tools in a single response. You MUST do all of the above in a single message. Do not use any other tools or do anything else. Do not send any other text or messages besides these tool calls.
+8. IMPORTANT: Do NOT run these commands in parallel! Run them sequentially:
+   - First create the commit message file
+   - Then run `subl -nw` and WAIT for it to complete (user will edit and save)
+   - Then commit using the edited file
+   - Finally delete the temporary file
+   Each command must complete before running the next one.
 
 ## Commit Message Generation
 
