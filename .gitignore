@@ -9,3 +9,5 @@ shell-snapshots
 statsig
 todos
 .credentials.json
+file-history/
+history.jsonl
