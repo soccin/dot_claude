@@ -29,8 +29,8 @@ Based on the above changes:
 1. Checks which files are staged with `git status`
 2. If 0 files are staged, tell the user and stop!
 3. Create a draft of an appropriate commit message following the instructions below
-4. Save this message in a markdown file "commit_message_${UUID}.md" where $UUID is some random string to prevent collisions with multiple claude processes.
-5. Use the command `subl -nw` to allow me to edit the commit message.
+4. Save this message in a markdown file "commit_message_${UUID}.md" where $UUID is some random string to prevent collisions with multiple claude processes. Save this file in the current working directory, **NOT** /tmp.
+5. Use the command `subl -nw commit_message_${UUID}.md` to allow me to edit the commit message.
 6. Once I have saved the changes do the commit with the editted message
 7. DELETE the temporary commit message file
 8. IMPORTANT: Do NOT run these commands in parallel! Run them sequentially:
