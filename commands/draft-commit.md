@@ -1,5 +1,5 @@
 ---
-allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(subl:*), Bash(uuidgen)
+allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git commit:*), Bash(subl:*), Bash(uuidgen:*)
 description: Draft commit message
 ---
 # Claude Command: Commit
