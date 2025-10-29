@@ -51,6 +51,7 @@ When generating commit messages for this project:
 - Common types: feat, fix, docs, style, refactor, test, chore
 - Description should be concise but descriptive
 - Include reference to specific files or modules when relevant
+- Quote filenames with globs (\*) using backticks "`": eg, *.rda should be `*.rda`
 - At the end of the commit message add the text: `Co-Authored-By: Claude`
 
 ### Examples of good commit messages:
