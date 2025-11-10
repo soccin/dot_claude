@@ -27,11 +27,11 @@ Apply tidyverse formatting conventions that enhance readability:
 Structure code for obvious progression:
 ```r
 # GOOD: Linear, obvious progression
-data %>%
-  read_tsv() %>%
-  clean_names() %>%
-  filter(condition) %>%
-  mutate(new_col = transformation) %>%
+data |>
+  read_tsv() |>
+  clean_names() |>
+  filter(condition) |>
+  mutate(new_col = transformation) |>
   select(final_columns)
 
 # AVOID: Complex nested operations that require mental parsing
@@ -50,7 +50,7 @@ data %>% mutate(coords = map(.[[4]], complex_parser))
 - Don't document obvious operations
 - Write comments for the original author's future reference
 
-## 5. Keep Functions Focused and Simple  
+## 5. Keep Functions Focused and Simple
 - One clear purpose per function
 - Minimal abstraction unless there's real benefit
 - Prefer obvious implementations over "clever" ones
@@ -63,7 +63,7 @@ data %>% mutate(coords = map(.[[4]], complex_parser))
 - Group related operations with clear section breaks only when they aid comprehension
 
 ## 7. Tidyverse Usage: Simple and Clear
-- Use **`|>` (native pipe) over `%>%`** for R compatibility, but fall back to `%>%` when needed for advanced functionality:
+- Use **`|>` (native pipe) over `%>%`** for R compatibility, but fall back to `%>%` when needed for advanced functionality (magrittr-specific functionality needed):
   ```r
   # Needs %>% - this won't work with |>
   y = x %>% split(.$group)
