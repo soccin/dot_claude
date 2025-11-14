@@ -72,6 +72,11 @@ data %>% mutate(coords = map(.[[4]], complex_parser))
 - **Avoid overly functional approaches** (excessive `map()`, `purrr`) when simple solutions exist
 - Prefer tidyverse functions over base R equivalents where it enhances clarity
 
+### Join Operations: Hands Off
+- **Do not modify `by` arguments** in any join functions (`left_join()`, `inner_join()`, `full_join()`, etc.)
+- **Do not add explicit `by` arguments** where the code relies on natural joins
+- Join column matching is context-dependent and subtle - leave all join specifications exactly as written
+
 ## 8. Selective Error Handling
 - Add error handling **only when failure is likely or consequences are severe**
 - Use simple checks rather than comprehensive validation for internal functions
