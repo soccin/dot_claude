@@ -17,23 +17,17 @@ To create a draft commit, just type:
 
 3. Performs a `git diff --staged` to understand what changes are being committed
 
-## Context
-
-- Current git status: !`git status`
-- Current git diff (staged files ONLY!!): !`git diff --staged`
-
 ## Your task
 
-Based on the above changes:
-
-1. Checks which files are staged with `git status`
+1. First check which files are staged with `git status`
 2. If 0 files are staged, tell the user and stop!
-3. Create a draft of an appropriate commit message following the instructions below
-4. Save this message in a markdown file "commit_message_TIMESTAMP.md" where TIMESTAMP is the current Unix timestamp (use `date +%s` to generate). Save this file in the current working directory, **NOT** /tmp.
-5. Use the command `subl -nw commit_message_TIMESTAMP.md` to allow me to edit the commit message.
-6. Once I have saved the changes do the commit with the editted message
-7. DELETE the temporary commit message file
-8. IMPORTANT: Do NOT run these commands in parallel! Run them sequentially:
+3. Run `git diff --staged` to see the actual changes
+4. Create a draft of an appropriate commit message following the instructions below
+5. Save this message in a markdown file "commit_message_TIMESTAMP.md" where TIMESTAMP is the current Unix timestamp (use `date +%s` to generate). Save this file in the current working directory, **NOT** /tmp.
+6. Use the command `subl -nw commit_message_TIMESTAMP.md` to allow me to edit the commit message.
+7. Once I have saved the changes do the commit with the editted message
+8. DELETE the temporary commit message file
+9. IMPORTANT: Do NOT run these commands in parallel! Run them sequentially:
    - First create the commit message file
    - Then run `subl -nw` and WAIT for it to complete (user will edit and save)
    - Then commit using the edited file
