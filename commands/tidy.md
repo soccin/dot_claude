@@ -1,49 +1,105 @@
 ---
-description: Tidy and refactor R script according to tidyverse style guide
+description: Tidy and refactor R script with clarity-first approach
 allowed-tools: Read, Edit, WebFetch
 ---
 
 # Tidy R Script
 
-Reformat and refactor the R script `$1` to conform to the tidyverse style guide:
+Reformat and refactor the R script `$1` with a **clarity-first approach** that prioritizes human comprehension over strict rule compliance:
 
-1. **Code Style**: Apply tidyverse formatting conventions including:
-   - Proper spacing around operators and after commas
-   - Consistent indentation (2 spaces)
-   - Line length limits (80 characters)
-   - Snake_case for variable and function names
-   - Clear function definitions with proper parameter spacing
+## Core Philosophy: Clarity Over Compliance
+- **Human comprehension first**: Code should tell a clear story to humans
+- **Style serves clarity**: Formatting rules help readability, not hinder it  
+- **Simple over sophisticated**: Use the simplest construct that accomplishes the goal
+- **The 30-second test**: Can a collaborator understand this code in 30 seconds?
 
-2. **Documentation**: Add comprehensive comments that:
-   - Explain the purpose of each major code section
-   - Document function parameters and return values
-   - Provide context for complex operations
-   - Follow roxygen2-style comments where appropriate; especially for functions
-   - Are written for the original author's future reference
+## 1. Code Style: Consistent Formatting
+Apply tidyverse formatting conventions that enhance readability:
+- Proper spacing around operators and after commas
+- Consistent indentation (2 spaces)
+- Line length limits (80 characters)
+- Snake_case for variable and function names
+- **However**, variables that are in all caps (eg GLOBAL) have external scope and should *NOT* be changed in any way
+- Clear function definitions with proper parameter spacing
+- Remove any trailing white space
 
-3. **Code Structure**: Improve organization by:
-   - Grouping related operations
-   - Adding clear section breaks
-   - Ensuring logical flow from data loading to output
+## 2. Clear Logic Flow
+Structure code for obvious progression:
+```r
+# GOOD: Linear, obvious progression
+data |>
+  read_tsv() |>
+  clean_names() |>
+  filter(condition) |>
+  mutate(new_col = transformation) |>
+  select(final_columns)
 
-4. **Tidyverse Principles**: Apply tidyverse best practices:
-   - Use pipe operators (`|>`) for readable data transformations but remember its limitations and fail back to `%>%` when needed.
-   - Prefer tidyverse functions over base R equivalents where appropriate
-   - Use consistent naming conventions
-   - Implement clear, functional programming patterns
+# AVOID: Complex nested operations that require mental parsing
+data %>% mutate(coords = map(.[[4]], complex_parser))
+```
 
-5. **Compatibility**: Ensure no conflicts with functions defined in `~/.Rprofile`:
-   - Avoid redefining: `cc()`, `len()`, `DATE()`, `write.xls()`, `getSDIR()`, `get_script_dir()`, `halt()`, `appendList()`, `suppress()`
-   - Check for any custom functions in the ndsLib environment
+## 3. Meaningful Names Throughout
+- Function names should describe what they do: `parse_peak_strings()` not `extract_coords()`
+- Variable names should be immediately clear: `lesions_file` not `input_path`
+- Avoid cryptic references like `.[[4]]` - use named columns
 
-6. **General Style Rules**: Clean things up by:
-   - Remove any trailing white space
+## 4. Documentation: Clarify, Don't Obscure
+- Use standard **roxygen2 documentation for all functions** (@param, @return)
+- Keep function documentation **concise and purpose-focused**
+- Add **brief comments only for complex logic**
+- Don't document obvious operations
+- Write comments for the original author's future reference
 
-7. **Error Handling**
-  - Use `cat()` for clear, user-friendly error messages with proper spacing
-  - Use `quit(status = 1)` for fatal errors instead of `stop()`
-  - Format: `cat("\nERROR: Clear description\n\n")` followed by `quit(status = 1)`
-  - For severe errors where it is not clear what is happening or a state that should never be seen, use `rlang::abort()` with concise messages
+## 5. Keep Functions Focused and Simple
+- One clear purpose per function
+- Minimal abstraction unless there's real benefit
+- Prefer obvious implementations over "clever" ones
+- Place utility functions near where they're used
 
+## 6. Minimize Cognitive Load
+- Avoid introducing multiple new concepts simultaneously
+- Keep the main logic visible, not buried in abstractions
+- Progressive complexity: start simple, add only when necessary
+- Group related operations with clear section breaks only when they aid comprehension
 
-Please read the file `@$1` and apply these tidyverse style guidelines while preserving all functionality. Focus on readability and maintainability for future reference by the original author.
+## 7. Tidyverse Usage: Simple and Clear
+- Use **`|>` (native pipe) over `%>%`** for R compatibility, but fall back to `%>%` when needed for advanced functionality (magrittr-specific functionality needed):
+  ```r
+  # Needs %>% - this won't work with |>
+  y = x %>% split(.$group)
+  ```
+- Prefer standard dplyr verbs (`select()`, `filter()`, `mutate()`) over base R equivalents for consistency
+- **Avoid overly functional approaches** (excessive `map()`, `purrr`) when simple solutions exist
+- Prefer tidyverse functions over base R equivalents where it enhances clarity
+
+### Join Operations: Hands Off
+- **Do not modify `by` arguments** in any join functions (`left_join()`, `inner_join()`, `full_join()`, etc.)
+- **Do not add explicit `by` arguments** where the code relies on natural joins
+- Join column matching is context-dependent and subtle - leave all join specifications exactly as written
+
+## 8. Selective Error Handling
+- Add error handling **only when failure is likely or consequences are severe**
+- Use simple checks rather than comprehensive validation for internal functions
+- **Fail fast with clear messages** using:
+  - `cat("\nERROR: Clear description\n\n")` followed by `quit(status = 1)` for user-facing errors
+  - `rlang::abort()` with concise messages for severe/unexpected errors
+- Don't add defensive programming for every edge case
+
+## 9. Compatibility Requirements
+Ensure no conflicts with functions defined in `~/.Rprofile`:
+- Avoid redefining: `cc()`, `len()`, `DATE()`, `write.xls()`, `getSDIR()`, `get_script_dir()`, `halt()`, `appendList()`, `suppress()`
+- Check for any custom functions in the ndsLib environment
+
+## 10. Anti-Patterns to Avoid
+- Over-documentation that obscures simple logic
+- Complex functional programming when procedural is clearer  
+- Premature abstraction and generalization
+- Defensive programming for every edge case
+- "Clever" code that requires mental decoding
+- Excessive abstraction layers
+
+---
+
+**Guiding Principle**: Apply these guidelines while preserving all functionality. Focus on making the code immediately comprehensible to future readers, including the original author. When in doubt, choose clarity over compliance with any single rule.
+
+Please read the file `@$1` and apply these clarity-first guidelines, ensuring the code tells a clear story while maintaining tidyverse best practices.
