@@ -5,7 +5,8 @@ allowed-tools:
   - "Bash(date +%s)"
   - "Bash(subl -nw *)"
   - "Bash(git commit -F *)"
-  - "Bash(rm commit_message_*.md)"
+  - "Bash(git status)"
+  - "Bash(rm commit_message_*)"
   - Write
 description: Draft commit message
 ---
