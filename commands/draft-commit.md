@@ -1,5 +1,12 @@
 ---
-allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git commit:*), Bash(subl:*), Bash(date:*), Bash(rm commit_message_*:), Write
+allowed-tools:
+  - "Bash(git status)"
+  - "Bash(git diff --staged)"
+  - "Bash(date +%s)"
+  - "Bash(subl -nw *)"
+  - "Bash(git commit -F *)"
+  - "Bash(rm commit_message_*.md)"
+  - Write
 description: Draft commit message
 ---
 # Claude Command: Commit
