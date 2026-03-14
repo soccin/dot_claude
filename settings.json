@@ -2,7 +2,13 @@
   "alwaysThinkingEnabled": false,
   "permissions": {
     "allow": [
-      "WebFetch"
+      "Bash(git checkout:*)",
+      "Bash(git push:*)",
+      "Bash(Rscript *)",
+      "Bash(R *)",
+      "Bash(R)",
+      "WebFetch",
+      "WebSearch"
     ]
   }
 }
