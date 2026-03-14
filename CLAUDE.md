@@ -9,6 +9,7 @@
 - Follow existing code conventions
 - Run linting/typechecking after code changes
 - Only commit when explicitly requested
+- Never chain bash commands with `&&`, `;`, or `|` — always run each as a separate tool call. Chaining bypasses `allowed-tools` pattern matching in slash command frontmatter.
 - DO NOT USE emoji in commit messages
 - Do NOT use emoji in any commit, release notes, docs, comments, ...
 - Do **NOT** use emoji every!!
@@ -22,7 +23,44 @@
 - STOP USING EMOJI
 
 ## R Information
-- Please make sure to read my ~/.Rprofile file to get my custom function/variable definitions
+- Always read `~/.Rprofile` for custom function/variable definitions:
+  `cc()`, `len()`, `DATE()`, `halt()`, `getSDIR()`, `suppress()`, etc.
+
+### Coding style — ALWAYS follow these rules for R code
+
+**Tidyverse first**
+- Always prefer tidyverse idioms over base R equivalents
+- Use `dplyr` verbs (`mutate`, `filter`, `select`, `summarize`, etc.)
+  instead of `[`, `[[`, `$` subsetting chains or `apply` family
+- Use `purrr` (`map`, `map_dfr`, etc.) instead of `lapply`/`sapply`
+- Use `tibble`/`read_csv` instead of `data.frame`/`read.csv`
+- Write data transformations as pipelines, not nested calls
+- Prefer the base pipe `|>` over `%>%` in all new code
+- Use `%>%` only when necessary for lambda-style tricks that `|>`
+  cannot express, e.g. `%>% split(.$col)` (since `dplyr::group_split`
+  is broken for this use case)
+
+**String operations — stringr + glue, never base R**
+- Use `stringr` functions exclusively for string manipulation:
+  - `str_detect` not `grepl`
+  - `str_subset` not `grep(..., value=TRUE)`
+  - `str_remove`/`str_remove_all` not `sub`/`gsub`
+  - `str_replace`/`str_replace_all` not `sub`/`gsub`
+  - `str_extract` not `regmatches`/`regexpr`
+  - `str_c` not `paste`/`paste0` (for general concatenation)
+  - `str_glue` or `glue::glue` not `paste0` for building strings
+    with interpolated values (especially regex patterns)
+  - `str_trim`/`str_squish` not `trimws`
+  - `str_split_1`/`str_split` not `strsplit`
+- Use `glue("{var}")` syntax for constructing regex patterns and
+  any string that embeds a variable — never `paste0("^", x, ":")`
+
+**Misc**
+- Prefer `readr` (`read_csv`, `read_tsv`) over base `read.csv`/`read.table`;
+  always pass `show_col_types=FALSE`
+- Use `fs` package for file system operations (`dir_ls`, `file_exists`, etc.)
+  instead of `list.files`, `file.exists`
+- Use `forcats` for factor manipulation instead of base `factor()`/`levels<-`
 
 ## Python Documentation Standards
 
